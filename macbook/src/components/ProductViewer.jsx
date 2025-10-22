@@ -1,8 +1,10 @@
 import React from 'react'
 import useMacbookStore from '../store';
 import clsx from "clsx";
-import {Canvas} from "@react-three/fiber";
-import {Box, OrbitControls} from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Box, OrbitControls } from "@react-three/drei";
+import MacbookModel14 from './models/Macbook-14';
+import StudioLights from './three/StudioLight';
 
 const ProductViewer = () => {
     const { color, scale, setColor, setScale } = useMacbookStore();
@@ -26,7 +28,7 @@ const ProductViewer = () => {
                     </div>
 
                     <div className="size-control">
-                    <div
+                        <div
                             onClick={() => setScale(0.06)}
                             className={clsx(scale === 0.06 ? 'bg-white text-black' : 'bg-transparent text-white')}
                         >
@@ -42,9 +44,12 @@ const ProductViewer = () => {
                 </div>
             </div>
 
-            <Canvas id="canvas" camera={{ position: [0, 2, 5], fov: 50, near: 0.1, far: 100}}>
-                <Box position={[0, 0, 0]} scale={10 * scale} material-color={color}></Box>
-                <OrbitControls enableZoom={false}/>
+            <Canvas id="canvas" camera={{ position: [0, 2, 5], fov: 50, near: 0.1, far: 100 }}>
+                <StudioLights />
+
+                <MacbookModel14 scale={0.06} position={[0, 0, 0]} />
+                
+                <OrbitControls enableZoom={false} />
             </Canvas>
 
             <p className='text-white text-4xl'>Render Canvas</p>
